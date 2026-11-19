@@ -1,0 +1,213 @@
+{
+  "fecha": "2026-11-18",
+  "origen_carpeta": "C:\\Users\\luisn\\Documents\\Codex\\2026-11-12\\referenced-chatgpt-conversation-this-is-an\\outputs\\NexusKM",
+  "origen_zip": "C:\\Users\\luisn\\Documents\\Codex\\2026-11-12\\referenced-chatgpt-conversation-this-is-an\\outputs\\NexusKM_paquete_final_ejecutado.zip",
+  "metodo": "Copia completa verificada por SHA-256",
+  "cantidad_archivos": 33,
+  "bytes_archivos": 1294637,
+  "zip_conservado": {
+    "archivo": "contexto/fuentes/antecedentes/NexusKM_paquete_final_ejecutado.zip",
+    "bytes": 1120119,
+    "sha256": "75ebd221ebe2190fbb4b4079b0e86d22d569c0f2bcfed00fcf537e3b2436dad5"
+  },
+  "archivos": [
+    {
+      "archivo": "NexusKM/cypher/00_preflight.cypher",
+      "bytes": 298,
+      "sha256": "279ec7c6d83908ed1866edb75f3edb3b5153af3e629d360e7e883bad4c24b545",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/cypher/01_constraints.cypher",
+      "bytes": 3009,
+      "sha256": "5d31fae62fe43d78be0e6209d0f52f4caebd7faf025d3ec4798d4a4d76d3e010",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/cypher/02_nodes_core.cypher",
+      "bytes": 3329,
+      "sha256": "9524ea264f166a8726b69c7983fca5fdfa43cbac0106bbbebf38ad22136c2b39",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/cypher/03_nodes_technical.cypher",
+      "bytes": 1683,
+      "sha256": "1d5cd152cc7faf250cc800c740d99aaaac389d43d749049f553f9b3ac3241b8f",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/cypher/04_relationships_core.cypher",
+      "bytes": 2806,
+      "sha256": "12d2e07a508a061e97308011b94bdcaf8f3fdcecf9da2822b4021d67e2e844ea",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/cypher/05_dependencies.cypher",
+      "bytes": 1457,
+      "sha256": "0a0dc252fbc689dc78dcd0fe6a0a599937be6072a9c3b63ff93c397776226156",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/cypher/06_governance.cypher",
+      "bytes": 2879,
+      "sha256": "acbb2fddef7cb71094231207314ab9706643c4c30c9841303ee2f5395b188dc4",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/cypher/07_security_sync_audit.cypher",
+      "bytes": 2460,
+      "sha256": "dbf649e28a1cae6fe39d9c6071969635df5c51d810e0721aba44d21b991479e2",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/cypher/08_queries.cypher",
+      "bytes": 3014,
+      "sha256": "d6a9402b9a6c380ebcd63d7ca8d65c71fb36aa93069e3182011a7319ac9dce45",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/cypher/09_tests.cypher",
+      "bytes": 2551,
+      "sha256": "540dc2d981277435d2832ff094117fecaa99f6f8fd582c642a6e4374a26cafff",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/diagramas/01_aprobacion_documental.mmd",
+      "bytes": 373,
+      "sha256": "0505eb4f89ed41ebee3ea1181109937cdb1575ddc49d54a10523cd624493d68a",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/diagramas/02_doble_aprobacion_tecnica.mmd",
+      "bytes": 492,
+      "sha256": "a1a0b697729ea7e20cc4960e42b386c489e444669a32bf967ae374627eef7425",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/diagramas/03_excepciones_48_72.mmd",
+      "bytes": 519,
+      "sha256": "85768af596c8fdfbf1a4634b1d919a3067e399007c687393e9d2f3e426830094",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/diagramas/04_seguridad.mmd",
+      "bytes": 291,
+      "sha256": "283d28abbd1b912a9a592d969a73512e46bdb718aeaf29a3e8456669d38a81cf",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/diagramas/05_sincronizacion.mmd",
+      "bytes": 384,
+      "sha256": "40bb07ad9c149a1c6ea14cc83512b44711637b38ccba4fe52762e26325b89e8a",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/diagramas/06_auditoria.mmd",
+      "bytes": 279,
+      "sha256": "00591ec29ad06c6431117c448fcc1e13cded2a590098ff99b311fc9dd66b21b6",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/diagramas/07_modelo_logico.mmd",
+      "bytes": 848,
+      "sha256": "e5e0b2d71ad0a114a8cfbba04832ebf826eaf9a1d056728b04054a98628767e9",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/diagramas/README.md",
+      "bytes": 666,
+      "sha256": "3d075aac751767be18d537f824178240b468b24578fd6e80ea5a0911445d6f17",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/documentacion/NexusKM_documento_academico_actualizado.docx",
+      "bytes": 257993,
+      "sha256": "433d845914e34fb65dd40017e7d27519da398925f2324f084f45abf63b70458f",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/documentacion/NexusKM_documento_academico_actualizado.pdf",
+      "bytes": 666142,
+      "sha256": "28104e0c15aa633fe69bf9275a0749aac2b8d6a1c67ad19dd91222c92de8241d",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/evidencias/01_resumen_ejecucion.md",
+      "bytes": 1360,
+      "sha256": "102979a2ed37da046aab34e1ea39308d0f44e0767dbeb82a841599e154e5f440",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/evidencias/02_resultados_consultas.md",
+      "bytes": 1462,
+      "sha256": "119551a7e6db05c76a806b65f0a91984cf765c1b6127c120f6c467362cecd8d6",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/evidencias/03_resultados_pruebas.md",
+      "bytes": 1152,
+      "sha256": "4cc400285f58446a81aac705ffcf4192b2a52da34df0e2753e2a4bac9caca68d",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/evidencias/04_grafo_resumen_ejecutado.png",
+      "bytes": 73436,
+      "sha256": "35cad15de2453013486671f585be54cac33ef1ac31642e3d101ea27ef70907de",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/evidencias/05_subgrafo_impacto_inventory_api.png",
+      "bytes": 76012,
+      "sha256": "c19491a36efa79038295fd25671b9f7428ca70cd71b73d64d51bad8f06343f19",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/evidencias/06_doble_aprobacion_verificada.png",
+      "bytes": 61312,
+      "sha256": "467bfaa33c333b79eaad4b981594253fdcf316dce017fa7ff3b44f26e47aeb16",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/evidencias/README.md",
+      "bytes": 879,
+      "sha256": "327d1d1185732d01e84ad461b61d47b7e35a600e8a4e2b4ea9098737f0ded78d",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/FUENTES.md",
+      "bytes": 693,
+      "sha256": "6f62a32fa704768c5ee83238e18e6eb0d5fc570200cc737e7b94836bf245598b",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/presentacion/NexusKM_presentacion_clase_final_actualizada.pptx",
+      "bytes": 115341,
+      "sha256": "80da9fa7d16456e7e655344602c04cb1b4c470aa2e7e7bc1bde55c941154c91d",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/prompt_codex/codex_config_neo4j.toml.example",
+      "bytes": 466,
+      "sha256": "e590730873284bba237f5575d6252b69fa64a9a29231dc652f7595d90726d8fb",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/prompt_codex/CONFIGURACION_MCP_NEO4J.md",
+      "bytes": 3039,
+      "sha256": "febdce74f786caf85f7ceaf1f585793aebafaaf6df61b1a2527b8c465c728839",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/prompt_codex/PROMPT_PARA_CODEX.md",
+      "bytes": 3235,
+      "sha256": "1835f02daa0f3a22f2b44bebd71fddb5ac62e1cf360346a53ab33d9430e07936",
+      "coincide_con_zip": true
+    },
+    {
+      "archivo": "NexusKM/README.md",
+      "bytes": 4777,
+      "sha256": "24a3c8d62780bf063fbcc6a76ad6ce6684f94aee5ab00966eeb9c7d299d6d8a7",
+      "coincide_con_zip": true
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+flowchart LR
+  A[Autor crea versión] --> B[Validación de campos]
+  B --> C{¿Documento restringido?}
+  C -- No --> D[Revisión del propietario]
+  C -- Sí --> E[Revisión de seguridad]
+  E --> D
+  D --> F{¿Aprobado?}
+  F -- No --> G[Devolver con observaciones]
+  G --> A
+  F -- Sí --> H[Publicar versión]
+  H --> I[Definir vencimiento]
+  I --> J[Registrar auditoría]

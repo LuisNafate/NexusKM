@@ -1,0 +1,15 @@
+flowchart TD
+  A[Incidente o urgencia] --> B{Criticidad}
+  B -- Crítica --> C[Fecha límite precomputada: 48 horas hábiles]
+  B -- Alta --> D[Fecha límite precomputada: 72 horas hábiles]
+  C --> E[Autorización temporal]
+  D --> E
+  E --> F[Monitoreo]
+  F --> G{¿Riesgo resuelto antes del límite?}
+  G -- Sí --> H[Cerrar excepción y documentar]
+  G -- No --> I[Escalar al responsable]
+  I --> J{¿Venció?}
+  J -- No --> F
+  J -- Sí --> K[Marcar vencida y bloquear continuidad]
+  H --> L[Auditoría]
+  K --> L

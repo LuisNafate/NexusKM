@@ -1,0 +1,8 @@
+flowchart LR
+  A[Persona autenticada] --> B[Roles activos]
+  B --> C[Políticas asociadas]
+  C --> D[Clasificación del documento]
+  D --> E{¿Acción permitida?}
+  E -- No --> F[Denegar y auditar]
+  E -- Sí --> G[Permitir lectura o aprobación]
+  G --> H[Auditar actor, acción y entidad]

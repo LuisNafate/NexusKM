@@ -1,0 +1,13 @@
+flowchart LR
+  A[Sistema origen] --> B[Extraer metadatos]
+  B --> C[Normalizar identificadores]
+  C --> D{¿Existe entidad?}
+  D -- No --> E[Crear borrador]
+  D -- Sí --> F{¿Hay cambios concurrentes?}
+  F -- No --> G[Actualizar]
+  F -- Sí --> H[Crear conflicto]
+  H --> I[Resolución humana]
+  E --> J[Registrar sincronización]
+  G --> J
+  I --> J
+  J --> K[Evento de auditoría]

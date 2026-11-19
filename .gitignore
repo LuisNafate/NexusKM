@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+neo4j-password.txt
+__pycache__/
+*.py[cod]
+node_modules/
+.venv/
+.DS_Store
+Thumbs.db
+~$*

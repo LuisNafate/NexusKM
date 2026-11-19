@@ -1,0 +1,17 @@
+[mcp_servers.neo4j_nexuskm]
+command = "uvx"
+args = ["neo4j-mcp-server"]
+env_vars = ["NEO4J_MCP_PASSWORD"]
+enabled = true
+startup_timeout_sec = 30
+tool_timeout_sec = 120
+
+[mcp_servers.neo4j_nexuskm.env]
+NEO4J_MCP_URI = "bolt://localhost:7687"
+NEO4J_MCP_USERNAME = "nexuskm_reader"
+NEO4J_MCP_DATABASE = "nexuskm"
+NEO4J_MCP_READ_ONLY = "true"
+NEO4J_MCP_TELEMETRY = "false"
+NEO4J_MCP_LOG_LEVEL = "info"
+NEO4J_MCP_LOG_FORMAT = "text"
+NEO4J_MCP_SCHEMA_SAMPLE_SIZE = "100"

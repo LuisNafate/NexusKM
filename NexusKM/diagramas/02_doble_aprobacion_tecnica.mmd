@@ -1,0 +1,14 @@
+flowchart LR
+  A[Solicitud de cambio] --> B[Verificar solicitante]
+  B --> C[Asignar revisor técnico 1]
+  B --> D[Asignar revisor técnico 2]
+  C --> E{Decisión 1}
+  D --> F{Decisión 2}
+  E -- Rechaza --> G[Solicitud rechazada]
+  F -- Rechaza --> G
+  E -- Aprueba --> H[Validar revisores distintos]
+  F -- Aprueba --> H
+  H --> I{¿Son dos personas y ninguna es solicitante?}
+  I -- No --> J[Conflicto de segregación]
+  I -- Sí --> K[Aprobación técnica completa]
+  K --> L[Auditoría]

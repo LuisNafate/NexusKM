@@ -1,0 +1,7 @@
+flowchart LR
+  A[Acción de usuario o sistema] --> B[Validar identidad]
+  B --> C[Ejecutar operación]
+  C --> D[Crear EventoAuditoria]
+  D --> E[Guardar fecha, tipo, entidad e identificador]
+  E --> F[Relacionar actor cuando existe]
+  F --> G[Consulta cronológica y evidencia]
