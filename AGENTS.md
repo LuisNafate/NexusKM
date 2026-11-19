@@ -11,3 +11,4 @@
 - El chat previo registra la preferencia del usuario por trabajar en segundo plano mientras utiliza su PC. Prioriza herramientas que respeten esa preferencia.
 - Configura credenciales fuera del repositorio y registra los contratos de las variables con valores de ejemplo. Las evidencias deben poder compartirse sin secretos.
 - El usuario prefiere repositorios con README profesional, etiquetas de color, visualizaciones y referencias. Conserva ese estilo con estados verificables y enlaces a los recursos.
+- El usuario prefiere Conventional Commits. Usa mensajes tipo chore, fix, feat o docs según el cambio, con alcance cuando aporte contexto y un resumen concreto.
