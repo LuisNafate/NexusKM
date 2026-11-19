@@ -54,12 +54,12 @@ flowchart TB
     classDef application fill:#f5f3ff,stroke:#7c3aed,color:#3b0764
     classDef relational fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
     classDef document fill:#ecfdf5,stroke:#059669,color:#064e3b
-    classDef graph fill:#ecfeff,stroke:#0891b2,color:#164e63
+    classDef graphDatabase fill:#ecfeff,stroke:#0891b2,color:#164e63
 
     class UI,API application
     class SQL relational
     class DOC document
-    class GRAPH graph
+    class GRAPH graphDatabase
 ```
 
 La matriz de propiedad de datos, los identificadores compartidos y el tratamiento inicial de fallos parciales se describen en la [propuesta de arquitectura](contexto/arquitectura_propuesta.md).
