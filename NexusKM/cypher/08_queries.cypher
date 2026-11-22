@@ -8,6 +8,8 @@ ORDER BY proyecto;
 // Q2. Documentos vigentes, propietario y proyecto (4 entidades contando versión).
 MATCH (u:Persona)-[:PROPIETARIO_DE]->(d:Documento)<-[:VERSION_DE]-(v:VersionDocumento)
 MATCH (d)-[:DOCUMENTA]->(p:Proyecto)
+WHERE d.estado='PUBLICADO' AND coalesce(d.activo,true)
+  AND v.estado='VIGENTE' AND v.fechaVencimiento > datetime()
 RETURN d.titulo AS documento, v.numero AS version, v.estado AS estado,
        u.nombre AS propietario, p.nombre AS proyecto, v.fechaVencimiento AS vence
 ORDER BY vence;
@@ -32,7 +34,9 @@ RETURN s.solicitudId AS solicitud, s.estado AS estado,
 // Q5. Excepciones vigentes, vencidas o próximas a vencer.
 MATCH (e:ExcepcionEmergencia)
 RETURN e.excepcionId AS excepcion, e.criticidad AS criticidad, e.fechaLimite AS limite,
-       CASE WHEN e.fechaLimite < datetime() THEN 'VENCIDA'
+       CASE WHEN e.estado='CERRADA' THEN 'CERRADA'
+            WHEN e.fechaLimite IS NULL THEN 'FECHA_FALTANTE'
+            WHEN e.fechaLimite < datetime() THEN 'VENCIDA'
             WHEN e.fechaLimite < datetime() + duration({hours:24}) THEN 'PROXIMA_A_VENCER'
             ELSE e.estado END AS estadoCalculado;
 

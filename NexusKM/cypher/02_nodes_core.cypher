@@ -26,7 +26,8 @@ UNWIND [
   {id:'ROL-004', nombre:'Propietario documental'},
   {id:'ROL-005', nombre:'Administrador de conocimiento'}
 ] AS row
-MERGE (n:Rol {rolId:row.id}) SET n.nombre=row.nombre;
+MERGE (n:Rol {rolId:row.id})
+SET n.nombre=row.nombre, n.descripcion='Responsabilidad de ' + row.nombre;
 
 UNWIND [
   {id:'PRY-001', codigo:'CHECKOUT', nombre:'Sistema Checkout', descripcion:'Compras y pagos'},

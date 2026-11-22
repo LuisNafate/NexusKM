@@ -26,6 +26,8 @@ MERGE (r)-[:DESDE]->(o)
 MERGE (r)-[:HACIA]->(d);
 
 MATCH (s:Microservicio {servicioId:'SRV-001'}), (a:API {apiId:'API-002'})
-MERGE (s)-[:DEPENDE_DE {criticidad:'CRITICA', dependenciaId:'DEPTEC-001'}]->(a);
+MERGE (s)-[r:DEPENDE_DE {dependenciaId:'DEPTEC-001'}]->(a)
+SET r.criticidad='CRITICA';
 MATCH (s:Microservicio {servicioId:'SRV-001'}), (a:API {apiId:'API-003'})
-MERGE (s)-[:DEPENDE_DE {criticidad:'CRITICA', dependenciaId:'DEPTEC-002'}]->(a);
+MERGE (s)-[r:DEPENDE_DE {dependenciaId:'DEPTEC-002'}]->(a)
+SET r.criticidad='CRITICA';

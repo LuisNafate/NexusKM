@@ -12,7 +12,7 @@ UNWIND [
   {id:'APR-001', tipo:'TECNICA', decision:'APROBADA', fecha:'2026-11-10T12:00:00-06:00', persona:'PER-003'},
   {id:'APR-002', tipo:'TECNICA', decision:'APROBADA', fecha:'2026-11-10T14:00:00-06:00', persona:'PER-006'},
   {id:'APR-003', tipo:'SEGURIDAD', decision:'APROBADA', fecha:'2026-11-10T16:00:00-06:00', persona:'PER-002'},
-  {id:'APR-004', tipo:'PROPIETARIO', decision:'APROBADA', fecha:'2026-11-10T17:00:00-06:00', persona:'PER-005'}
+  {id:'APR-004', tipo:'PROPIETARIO', decision:'APROBADA', fecha:'2026-11-10T17:00:00-06:00', persona:'PER-002'}
 ] AS row
 MERGE (a:Aprobacion {aprobacionId:row.id})
 SET a.tipo=row.tipo, a.decision=row.decision, a.fecha=datetime(row.fecha)

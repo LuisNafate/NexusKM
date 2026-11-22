@@ -51,8 +51,12 @@ WHERE origenes <> 1 OR destinos <> 1
 RETURN r.dependenciaId AS violacion, origenes, destinos;
 
 // T8. Excepciones críticas respetan el máximo declarado de 48 horas hábiles.
-MATCH (e:ExcepcionEmergencia {criticidad:'CRITICA'})
-WHERE e.horasHabilesAprobadas > 48 OR e.horasHabilesAprobadas IS NULL
+MATCH (e:ExcepcionEmergencia)
+WHERE e.horasHabilesAprobadas IS NULL OR e.horasHabilesAprobadas < 1
+   OR NOT e.criticidad IN ['CRITICA','ALTA']
+   OR (e.criticidad='CRITICA' AND e.horasHabilesAprobadas > 48)
+   OR (e.criticidad='ALTA' AND e.horasHabilesAprobadas > 72)
+   OR e.inicio IS NULL OR e.fechaLimite IS NULL OR e.fechaLimite < e.inicio
 RETURN e.excepcionId AS violacion, e.horasHabilesAprobadas AS horas;
 
 // T9. Documentos publicados tienen al menos una versión vigente.
@@ -65,3 +69,22 @@ MATCH (n)
 RETURN count(n) AS nodos;
 MATCH ()-[r]->()
 RETURN count(r) AS relaciones;
+
+// T11. Cada aprobación corresponde exactamente a un emisor y una solicitud.
+MATCH (a:Aprobacion)
+OPTIONAL MATCH (a)-[:EMITIDA_POR]->(p:Persona)
+OPTIONAL MATCH (a)-[:APRUEBA_SOLICITUD]->(s:SolicitudCambio)
+WITH a,count(DISTINCT p) AS emisores,count(DISTINCT s) AS solicitudes
+WHERE emisores<>1 OR solicitudes<>1
+RETURN a.aprobacionId AS violacion,emisores,solicitudes;
+
+// T12. La aprobación de propietario corresponde al propietario documental.
+MATCH (a:Aprobacion {tipo:'PROPIETARIO'})-[:APRUEBA_SOLICITUD]->(s:SolicitudCambio)-[:SOBRE]->(v:VersionDocumento)-[:VERSION_DE]->(d:Documento)
+MATCH (a)-[:EMITIDA_POR]->(p:Persona)
+WHERE NOT EXISTS { MATCH (p)-[:PROPIETARIO_DE]->(d) }
+RETURN a.aprobacionId AS violacion;
+
+// T13. Los revisores técnicos tienen el rol de arquitectura.
+MATCH (a:Aprobacion {tipo:'TECNICA'})-[:EMITIDA_POR]->(p:Persona)
+WHERE NOT EXISTS { MATCH (p)-[:TIENE_ROL]->(:Rol {rolId:'ROL-002'}) }
+RETURN a.aprobacionId AS violacion;
