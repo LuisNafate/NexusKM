@@ -1,0 +1,496 @@
+{
+  "executed_at_utc": "2026-11-22T04:21:33.515199+00:00",
+  "environment": {
+    "host": "Windows-11-10.0.26300-SP0",
+    "python": "3.12.14",
+    "postgresql": "16.16",
+    "mongodb": "7.0.48",
+    "neo4j": [
+      {
+        "versions": [
+          "5.26.33"
+        ],
+        "edition": "community"
+      }
+    ],
+    "scope": "Docker Compose local, datos ficticios, un cliente secuencial, 30 muestras por operación"
+  },
+  "health": {
+    "healthy": true,
+    "databases": {
+      "postgresql": true,
+      "mongodb": true,
+      "neo4j": true
+    }
+  },
+  "relational_counts": {
+    "departments": 4,
+    "people": 6,
+    "projects": 2,
+    "documents": 3,
+    "versions": 3,
+    "change_requests": 1,
+    "approvals": 4,
+    "audit_events": 1,
+    "operations": 0,
+    "outbox": 3
+  },
+  "document_count": 3,
+  "graph_counts": {
+    "nodes": 63,
+    "relationships": 87,
+    "labels": 23,
+    "constraints": 24,
+    "indexes": 32
+  },
+  "graph_tests": [
+    {
+      "id": "T1",
+      "query": "// NexusKM 09 - pruebas. Las consultas de violación deben devolver cero filas.\n\n// T1. Cada persona tiene exactamente un departamento.\nMATCH (p:Persona)\nOPTIONAL MATCH (p)-[:PERTENECE_A]->(d:Departamento)\nWITH p, count(d) AS cantidad\nWHERE cantidad <> 1\nRETURN p.personaId AS violacion, cantidad",
+      "passed": true,
+      "result": []
+    },
+    {
+      "id": "T2",
+      "query": "// T2. Cada proyecto tiene exactamente un departamento propietario.\nMATCH (p:Proyecto)\nOPTIONAL MATCH (p)-[:PROPIEDAD_DE]->(d:Departamento)\nWITH p, count(d) AS cantidad\nWHERE cantidad <> 1\nRETURN p.proyectoId AS violacion, cantidad",
+      "passed": true,
+      "result": []
+    },
+    {
+      "id": "T3",
+      "query": "// T3. Cada proyecto tiene exactamente un líder.\nMATCH (p:Proyecto)\nOPTIONAL MATCH (u:Persona)-[:LIDERA]->(p)\nWITH p, count(u) AS cantidad\nWHERE cantidad <> 1\nRETURN p.proyectoId AS violacion, cantidad",
+      "passed": true,
+      "result": []
+    },
+    {
+      "id": "T4",
+      "query": "// T4. Una versión pertenece exactamente a un documento.\nMATCH (v:VersionDocumento)\nOPTIONAL MATCH (v)-[:VERSION_DE]->(d:Documento)\nWITH v, count(d) AS cantidad\nWHERE cantidad <> 1\nRETURN v.versionId AS violacion, cantidad",
+      "passed": true,
+      "result": []
+    },
+    {
+      "id": "T5",
+      "query": "// T5. Solicitudes aprobadas requieren dos revisores técnicos distintos.\nMATCH (s:SolicitudCambio {estado:'APROBADA'})\nOPTIONAL MATCH (a:Aprobacion {tipo:'TECNICA', decision:'APROBADA'})-[:APRUEBA_SOLICITUD]->(s)\nOPTIONAL MATCH (a)-[:EMITIDA_POR]->(p:Persona)\nWITH s, count(DISTINCT p) AS revisores\nWHERE revisores < 2\nRETURN s.solicitudId AS violacion, revisores",
+      "passed": true,
+      "result": []
+    },
+    {
+      "id": "T6",
+      "query": "// T6. El solicitante no puede aprobar técnicamente su propia solicitud.\nMATCH (p:Persona)-[:SOLICITA]->(s:SolicitudCambio)\nMATCH (a:Aprobacion {tipo:'TECNICA'})-[:APRUEBA_SOLICITUD]->(s)\nMATCH (a)-[:EMITIDA_POR]->(p)\nRETURN s.solicitudId AS violacion, p.personaId AS persona",
+      "passed": true,
+      "result": []
+    },
+    {
+      "id": "T7",
+      "query": "// T7. Toda dependencia registrada tiene origen y destino.\nMATCH (r:RegistroDependencia)\nOPTIONAL MATCH (r)-[:DESDE]->(o)\nOPTIONAL MATCH (r)-[:HACIA]->(d)\nWITH r, count(DISTINCT o) AS origenes, count(DISTINCT d) AS destinos\nWHERE origenes <> 1 OR destinos <> 1\nRETURN r.dependenciaId AS violacion, origenes, destinos",
+      "passed": true,
+      "result": []
+    },
+    {
+      "id": "T8",
+      "query": "// T8. Excepciones críticas respetan el máximo declarado de 48 horas hábiles.\nMATCH (e:ExcepcionEmergencia)\nWHERE e.horasHabilesAprobadas IS NULL OR e.horasHabilesAprobadas < 1\n   OR NOT e.criticidad IN ['CRITICA','ALTA']\n   OR (e.criticidad='CRITICA' AND e.horasHabilesAprobadas > 48)\n   OR (e.criticidad='ALTA' AND e.horasHabilesAprobadas > 72)\n   OR e.inicio IS NULL OR e.fechaLimite IS NULL OR e.fechaLimite < e.inicio\nRETURN e.excepcionId AS violacion, e.horasHabilesAprobadas AS horas",
+      "passed": true,
+      "result": []
+    },
+    {
+      "id": "T9",
+      "query": "// T9. Documentos publicados tienen al menos una versión vigente.\nMATCH (d:Documento {estado:'PUBLICADO'})\nWHERE NOT EXISTS { MATCH (:VersionDocumento {estado:'VIGENTE'})-[:VERSION_DE]->(d) }\nRETURN d.documentoId AS violacion",
+      "passed": true,
+      "result": []
+    },
+    {
+      "id": "T10",
+      "query": "// T10. Resumen positivo esperado.\nMATCH (n)\nRETURN count(n) AS nodos",
+      "passed": true,
+      "result": [
+        {
+          "nodos": 63
+        }
+      ]
+    },
+    {
+      "id": "T10",
+      "query": "MATCH ()-[r]->()\nRETURN count(r) AS relaciones",
+      "passed": true,
+      "result": [
+        {
+          "relaciones": 87
+        }
+      ]
+    },
+    {
+      "id": "T11",
+      "query": "// T11. Cada aprobación corresponde exactamente a un emisor y una solicitud.\nMATCH (a:Aprobacion)\nOPTIONAL MATCH (a)-[:EMITIDA_POR]->(p:Persona)\nOPTIONAL MATCH (a)-[:APRUEBA_SOLICITUD]->(s:SolicitudCambio)\nWITH a,count(DISTINCT p) AS emisores,count(DISTINCT s) AS solicitudes\nWHERE emisores<>1 OR solicitudes<>1\nRETURN a.aprobacionId AS violacion,emisores,solicitudes",
+      "passed": true,
+      "result": []
+    },
+    {
+      "id": "T12",
+      "query": "// T12. La aprobación de propietario corresponde al propietario documental.\nMATCH (a:Aprobacion {tipo:'PROPIETARIO'})-[:APRUEBA_SOLICITUD]->(s:SolicitudCambio)-[:SOBRE]->(v:VersionDocumento)-[:VERSION_DE]->(d:Documento)\nMATCH (a)-[:EMITIDA_POR]->(p:Persona)\nWHERE NOT EXISTS { MATCH (p)-[:PROPIETARIO_DE]->(d) }\nRETURN a.aprobacionId AS violacion",
+      "passed": true,
+      "result": []
+    },
+    {
+      "id": "T13",
+      "query": "// T13. Los revisores técnicos tienen el rol de arquitectura.\nMATCH (a:Aprobacion {tipo:'TECNICA'})-[:EMITIDA_POR]->(p:Persona)\nWHERE NOT EXISTS { MATCH (p)-[:TIENE_ROL]->(:Rol {rolId:'ROL-002'}) }\nRETURN a.aprobacionId AS violacion",
+      "passed": true,
+      "result": []
+    }
+  ],
+  "graph_queries": [
+    {
+      "id": "Q1",
+      "query": "// NexusKM 08 - consultas de demostración.\n\n// Q1. Proyectos con líder y departamento propietario (3 entidades).\nMATCH (lider:Persona)-[:LIDERA]->(p:Proyecto)-[:PROPIEDAD_DE]->(d:Departamento)\nRETURN p.codigo AS proyecto, lider.nombre AS lider, d.nombre AS departamento\nORDER BY proyecto",
+      "result": [
+        {
+          "proyecto": "CHECKOUT",
+          "lider": "Ana López",
+          "departamento": "Desarrollo"
+        },
+        {
+          "proyecto": "INVENTARIO",
+          "lider": "Laura García",
+          "departamento": "Arquitectura"
+        }
+      ]
+    },
+    {
+      "id": "Q2",
+      "query": "// Q2. Documentos vigentes, propietario y proyecto (4 entidades contando versión).\nMATCH (u:Persona)-[:PROPIETARIO_DE]->(d:Documento)<-[:VERSION_DE]-(v:VersionDocumento)\nMATCH (d)-[:DOCUMENTA]->(p:Proyecto)\nWHERE d.estado='PUBLICADO' AND coalesce(d.activo,true)\n  AND v.estado='VIGENTE' AND v.fechaVencimiento > datetime()\nRETURN d.titulo AS documento, v.numero AS version, v.estado AS estado,\n       u.nombre AS propietario, p.nombre AS proyecto, v.fechaVencimiento AS vence\nORDER BY vence",
+      "result": [
+        {
+          "documento": "Runbook de pagos",
+          "version": "1.0",
+          "estado": "VIGENTE",
+          "propietario": "Sofía Herrera",
+          "proyecto": "Sistema Checkout",
+          "vence": "2027-05-21T04:08:31.433767000+00:00"
+        },
+        {
+          "documento": "Contrato API de inventario",
+          "version": "2.1",
+          "estado": "VIGENTE",
+          "propietario": "Diego Pérez",
+          "proyecto": "Sistema Inventario",
+          "vence": "2027-05-21T04:08:31.433767000+00:00"
+        }
+      ]
+    },
+    {
+      "id": "Q3",
+      "query": "// Q3. Impacto de una API: consumidor, dependencia, componente y proyecto (5+ entidades).\nMATCH (api:API {apiId:'API-002'})<-[:HACIA]-(rd:RegistroDependencia)-[:DESDE]->(consumidor:Microservicio)\nOPTIONAL MATCH (comp:Componente)-[:IMPLEMENTA]->(consumidor)\nOPTIONAL MATCH (repo:Repositorio)-[:CONTIENE]->(comp)\nOPTIONAL MATCH (repo)-[:PERTENECE_A_PROYECTO]->(p:Proyecto)\nRETURN api.nombre AS api, rd.criticidad AS criticidad, consumidor.nombre AS consumidor,\n       collect(DISTINCT comp.nombre) AS componentes,\n       collect(DISTINCT p.nombre) AS proyectos",
+      "result": [
+        {
+          "api": "Inventory API",
+          "criticidad": "CRITICA",
+          "consumidor": "checkout-service",
+          "componentes": [
+            "Adaptador de pagos"
+          ],
+          "proyectos": [
+            "Sistema Checkout"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q4",
+      "query": "// Q4. Solicitudes con conteo de aprobaciones técnicas distintas.\nMATCH (s:SolicitudCambio)\nOPTIONAL MATCH (a:Aprobacion {tipo:'TECNICA', decision:'APROBADA'})-[:APRUEBA_SOLICITUD]->(s)\nOPTIONAL MATCH (a)-[:EMITIDA_POR]->(revisor:Persona)\nRETURN s.solicitudId AS solicitud, s.estado AS estado,\n       count(DISTINCT revisor) AS revisoresTecnicos,\n       collect(DISTINCT revisor.nombre) AS nombres",
+      "result": [
+        {
+          "solicitud": "SOL-001",
+          "estado": "APROBADA",
+          "revisoresTecnicos": 2,
+          "nombres": [
+            "Laura García",
+            "Diego Pérez"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q5",
+      "query": "// Q5. Excepciones vigentes, vencidas o próximas a vencer.\nMATCH (e:ExcepcionEmergencia)\nRETURN e.excepcionId AS excepcion, e.criticidad AS criticidad, e.fechaLimite AS limite,\n       CASE WHEN e.estado='CERRADA' THEN 'CERRADA'\n            WHEN e.fechaLimite IS NULL THEN 'FECHA_FALTANTE'\n            WHEN e.fechaLimite < datetime() THEN 'VENCIDA'\n            WHEN e.fechaLimite < datetime() + duration({hours:24}) THEN 'PROXIMA_A_VENCER'\n            ELSE e.estado END AS estadoCalculado",
+      "result": [
+        {
+          "excepcion": "EXC-001",
+          "criticidad": "CRITICA",
+          "limite": "2026-11-13T09:00:00.000000000-06:00",
+          "estadoCalculado": "VENCIDA"
+        }
+      ]
+    },
+    {
+      "id": "Q6",
+      "query": "// Q6. Trazabilidad de auditoría por entidad.\nMATCH (e:EventoAuditoria)\nOPTIONAL MATCH (e)-[:EJECUTADO_POR]->(p:Persona)\nRETURN e.fecha AS fecha, e.tipo AS tipo, e.entidad AS entidad,\n       e.entidadId AS id, coalesce(p.nombre,'SISTEMA') AS actor\nORDER BY fecha",
+      "result": [
+        {
+          "fecha": "2026-11-10T09:00:00.000000000-06:00",
+          "tipo": "CREACION",
+          "entidad": "SolicitudCambio",
+          "id": "SOL-001",
+          "actor": "Sofía Herrera"
+        },
+        {
+          "fecha": "2026-11-10T12:00:00.000000000-06:00",
+          "tipo": "APROBACION",
+          "entidad": "SolicitudCambio",
+          "id": "SOL-001",
+          "actor": "Laura García"
+        },
+        {
+          "fecha": "2026-11-10T14:00:00.000000000-06:00",
+          "tipo": "APROBACION",
+          "entidad": "SolicitudCambio",
+          "id": "SOL-001",
+          "actor": "Diego Pérez"
+        },
+        {
+          "fecha": "2026-11-11T09:00:00.000000000-06:00",
+          "tipo": "EXCEPCION",
+          "entidad": "ExcepcionEmergencia",
+          "id": "EXC-001",
+          "actor": "Carlos Ruiz"
+        },
+        {
+          "fecha": "2026-11-12T06:08:00.000000000-06:00",
+          "tipo": "SINCRONIZACION",
+          "entidad": "Documento",
+          "id": "DOC-003",
+          "actor": "SISTEMA"
+        }
+      ]
+    },
+    {
+      "id": "Q7",
+      "query": "// Q7. Sincronizaciones con conflicto y elemento afectado.\nMATCH (s:Sincronizacion {estado:'CONFLICTO'})-[:DESDE_ORIGEN]->(o:SistemaOrigen)\nOPTIONAL MATCH (s)-[:ACTUALIZA]->(x)\nRETURN s.sincronizacionId AS sincronizacion, o.nombre AS origen,\n       labels(x) AS tipoAfectado, coalesce(x.titulo,x.nombre) AS afectado",
+      "result": [
+        {
+          "sincronizacion": "SYNC-002",
+          "origen": "Confluence",
+          "tipoAfectado": [
+            "Documento"
+          ],
+          "afectado": "Modelo de amenazas checkout"
+        }
+      ]
+    },
+    {
+      "id": "Q8",
+      "query": "// Q8. Autorizaciones representadas para una persona y clasificación.\nMATCH (p:Persona {personaId:'PER-002'})-[:TIENE_ROL]->(r:Rol)-[:HABILITA]->(pol:PoliticaAcceso)\nRETURN p.nombre AS persona, r.nombre AS rol, pol.clasificacion AS clasificacion,\n       collect(pol.accion) AS acciones",
+      "result": [
+        {
+          "persona": "Carlos Ruiz",
+          "rol": "Revisor de seguridad",
+          "clasificacion": "RESTRINGIDO",
+          "acciones": [
+            "LECTURA"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Q9",
+      "query": "// Q9. Conteo general para evidencia de carga.\nMATCH (n)\nRETURN labels(n)[0] AS etiqueta, count(*) AS cantidad\nORDER BY etiqueta",
+      "result": [
+        {
+          "etiqueta": "API",
+          "cantidad": 3
+        },
+        {
+          "etiqueta": "Aprobacion",
+          "cantidad": 4
+        },
+        {
+          "etiqueta": "Componente",
+          "cantidad": 3
+        },
+        {
+          "etiqueta": "Conflicto",
+          "cantidad": 1
+        },
+        {
+          "etiqueta": "Conocimiento",
+          "cantidad": 3
+        },
+        {
+          "etiqueta": "Decision",
+          "cantidad": 2
+        },
+        {
+          "etiqueta": "Delegacion",
+          "cantidad": 1
+        },
+        {
+          "etiqueta": "Departamento",
+          "cantidad": 4
+        },
+        {
+          "etiqueta": "Documento",
+          "cantidad": 3
+        },
+        {
+          "etiqueta": "Escalamiento",
+          "cantidad": 1
+        },
+        {
+          "etiqueta": "EventoAuditoria",
+          "cantidad": 5
+        },
+        {
+          "etiqueta": "ExcepcionEmergencia",
+          "cantidad": 1
+        },
+        {
+          "etiqueta": "Microservicio",
+          "cantidad": 3
+        },
+        {
+          "etiqueta": "Persona",
+          "cantidad": 6
+        },
+        {
+          "etiqueta": "PoliticaAcceso",
+          "cantidad": 3
+        },
+        {
+          "etiqueta": "Proyecto",
+          "cantidad": 2
+        },
+        {
+          "etiqueta": "RegistroDependencia",
+          "cantidad": 3
+        },
+        {
+          "etiqueta": "Repositorio",
+          "cantidad": 2
+        },
+        {
+          "etiqueta": "Rol",
+          "cantidad": 5
+        },
+        {
+          "etiqueta": "Sincronizacion",
+          "cantidad": 2
+        },
+        {
+          "etiqueta": "SistemaOrigen",
+          "cantidad": 2
+        },
+        {
+          "etiqueta": "SolicitudCambio",
+          "cantidad": 1
+        },
+        {
+          "etiqueta": "VersionDocumento",
+          "cantidad": 3
+        }
+      ]
+    }
+  ],
+  "pytest": {
+    "tests": 39,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 8.211
+  },
+  "impact": {
+    "api_id": "API-002",
+    "api_name": "Inventory API",
+    "paths": [
+      {
+        "api_id": "API-002",
+        "api_name": "Inventory API",
+        "dependency_id": "DEPTEC-001",
+        "criticality": "CRITICA",
+        "service": "checkout-service",
+        "component": "Adaptador de pagos",
+        "repository": "checkout-api",
+        "project_id": "PRY-001",
+        "project": "Sistema Checkout"
+      }
+    ],
+    "projects": [
+      {
+        "project_id": "PRY-001",
+        "code": "CHECKOUT",
+        "name": "Sistema Checkout",
+        "department_id": "DEP-001",
+        "leader_id": "PER-001",
+        "active": true,
+        "leader": "Ana López"
+      }
+    ],
+    "documents": [
+      {
+        "document_id": "DOC-001",
+        "title": "Runbook de pagos",
+        "kind": "RUNBOOK",
+        "classification": "INTERNO",
+        "owner_id": "PER-005",
+        "project_id": "PRY-001",
+        "active": true,
+        "revision": 1,
+        "version_id": "VER-001",
+        "number": "1.0",
+        "content_revision": 1,
+        "expires_at": "2027-05-21T04:08:31.433767+00:00",
+        "content": {
+          "steps": [
+            {
+              "title": "Identificar el incidente",
+              "instruction": "Recuperar el identificador de la compra y comprobar el estado del servicio."
+            },
+            {
+              "title": "Validar disponibilidad",
+              "instruction": "Consultar el contrato vigente de inventario y verificar la reserva."
+            },
+            {
+              "title": "Recuperar",
+              "instruction": "Reintentar con el mismo identificador para evitar una confirmación duplicada."
+            }
+          ],
+          "summary": "Procedimiento de diagnóstico y recuperación del servicio de pagos de Checkout.",
+          "sections": [
+            {
+              "body": "Aplica a checkout-service y al Adaptador de pagos del proyecto CHECKOUT.",
+              "heading": "Alcance"
+            },
+            {
+              "body": "Consultar Inventory API antes de confirmar el pago y conservar el identificador de la operación.",
+              "heading": "Verificación"
+            }
+          ]
+        },
+        "content_ready": true
+      }
+    ],
+    "sources": [
+      "Neo4j",
+      "PostgreSQL",
+      "MongoDB"
+    ],
+    "synchronization_pending": 0
+  },
+  "performance": {
+    "/api/impact/API-002": {
+      "samples": 30,
+      "median_ms": 38.38,
+      "p95_ms": 41.12,
+      "max_ms": 66.46
+    },
+    "/api/documents/DOC-001": {
+      "samples": 30,
+      "median_ms": 31.6,
+      "p95_ms": 33.66,
+      "max_ms": 44.63
+    },
+    "/api/requests": {
+      "samples": 30,
+      "median_ms": 23.51,
+      "p95_ms": 24.76,
+      "max_ms": 26.17
+    }
+  }
+}

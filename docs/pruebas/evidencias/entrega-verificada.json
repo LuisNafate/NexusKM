@@ -1,0 +1,96 @@
+{
+  "date": "2026-11-21",
+  "checked_at_utc": "2026-11-22T05:02:56.961900+00:00",
+  "report_pages": 40,
+  "presentation_slides": 17,
+  "rendering": {
+    "docx_pdf": "Microsoft Word invisible document export, then Poppler PNG pages",
+    "pptx": "Artifact Tool package/font/layout/import gates and native PowerPoint PNG/PDF export",
+    "reviewed_report_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40
+    ],
+    "reviewed_presentation_slides": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17
+    ]
+  },
+  "local_markdown_links": "passed",
+  "credentials_and_shared_chat_url_scan": "passed",
+  "artifacts": [
+    {
+      "file": "entrega/NexusKM_informe_integrado.pdf",
+      "bytes": 1221446,
+      "sha256": "9f93e8302e6d94e460445fa0cac5fb32d4a0f818b5b6d1027a6fee172ffb2e28"
+    },
+    {
+      "file": "entrega/NexusKM_informe_integrado.docx",
+      "bytes": 639138,
+      "sha256": "9e2618a2b6ca6a542f7aa0b6a89c1d32c8718c7e25abaee01fec6b17cef9a831"
+    },
+    {
+      "file": "entrega/NexusKM_presentacion_integrada.pptx",
+      "bytes": 161208,
+      "sha256": "e9a45618382300cbf7b1345235975ed90cebb9f0701fa63c187e836f045e1aff"
+    },
+    {
+      "file": "entrega/NexusKM_presentacion_integrada.pdf",
+      "bytes": 223289,
+      "sha256": "d0e177c1b35f1c54ecfd2da88e203535516dd87c45dcab71ef060dcba90632fd"
+    }
+  ],
+  "scope": "Academic local app; team performs final administrative submission"
+}

@@ -1,0 +1,47 @@
+{
+  "executed_at_utc": "2026-11-22T04:42:56.189284+00:00",
+  "project": "nexuskm-repro-20261121",
+  "commands": [
+    "docker compose -p nexuskm-repro-20261121 up -d --build --wait --wait-timeout 240",
+    "docker compose -p nexuskm-repro-20261121 restart app"
+  ],
+  "environment": "Isolated Docker Compose project, fresh volumes, alternate localhost ports",
+  "health": {
+    "healthy": true,
+    "databases": {
+      "postgresql": true,
+      "mongodb": true,
+      "neo4j": true
+    }
+  },
+  "before_restart": {
+    "postgresql": {
+      "documents": 3,
+      "versions": 3,
+      "people": 6,
+      "pending": 0,
+      "expires_at": "2027-05-21 04:36:38.018636+00"
+    },
+    "mongodb": 3,
+    "neo4j": 63,
+    "relationships": 87
+  },
+  "after_restart": {
+    "postgresql": {
+      "documents": 3,
+      "versions": 3,
+      "people": 6,
+      "pending": 0,
+      "expires_at": "2027-05-21 04:36:38.018636+00"
+    },
+    "mongodb": 3,
+    "neo4j": 63,
+    "relationships": 87
+  },
+  "impact_sources": [
+    "Neo4j",
+    "PostgreSQL",
+    "MongoDB"
+  ],
+  "passed": true
+}

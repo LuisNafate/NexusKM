@@ -27,13 +27,13 @@ Las referencias de esta página corresponden a las secciones de la [guía oficia
 
 La diapositiva 10 pide los siguientes productos para el modelo lógico. Usa el tema de tu aplicación para elaborarlos e incorpora su evidencia al entregable de modelado.
 
-- [ ] Tabla con **al menos 8 requerimientos funcionales y 5 consultas**. Al menos 2 consultas deben involucrar relaciones entre 3 o más entidades.
-- [ ] Diccionario con **al menos 3 propiedades por entidad**. Indicar nombre, tipo de dato, obligatoriedad y unicidad.
-- [ ] Catálogo con entidad origen, nombre de la relación, entidad destino y significado.
-- [ ] Tabla con **al menos 8 restricciones de integridad**.
-- [ ] Tabla con mínimo y máximo en ambos extremos de cada relación.
-- [ ] Diagrama del modelo lógico.
-- [ ] Conclusiones que expliquen por qué enumerar entidades es insuficiente y cómo influyen las consultas, restricciones y cardinalidades.
+- [x] Tabla con **al menos 8 requerimientos funcionales y 5 consultas**. Al menos 2 consultas deben involucrar relaciones entre 3 o más entidades.
+- [x] Diccionario con **al menos 3 propiedades por entidad**. Indicar nombre, tipo de dato, obligatoriedad y unicidad.
+- [x] Catálogo con entidad origen, nombre de la relación, entidad destino y significado.
+- [x] Tabla con **al menos 8 restricciones de integridad**.
+- [x] Tabla con mínimo y máximo en ambos extremos de cada relación.
+- [x] Diagrama del modelo lógico.
+- [x] Conclusiones que expliquen por qué enumerar entidades es insuficiente y cómo influyen las consultas, restricciones y cardinalidades.
 
 Para diseñar el grafo, parte de las preguntas de la aplicación, identifica los recorridos y define qué propiedades describen los nodos y cuáles describen las relaciones. Diapositivas 2–9. La guía, § 6.2, también vincula las actividades de refuerzo con la propuesta, la arquitectura, la selección tecnológica, la especificación del servicio, la implementación en Neo4j, el catálogo Cypher y el backend.
 
@@ -42,3 +42,7 @@ Para diseñar el grafo, parte de las preguntas de la aplicación, identifica los
 Según la guía § 9, conservar evidencia de conectividad del backend a los tres motores, operaciones funcionales, integridad de cada modelo, un flujo de extremo a extremo entre bases, consistencia de actualizaciones, manejo de errores y mediciones de rendimiento con el entorno y los datos descritos.
 
 La guía § 10 presenta una estructura de repositorio adaptable. La organización definitiva se elige con el stack y se documenta junto con las instrucciones de ejecución.
+
+## Comprobación del 21 de noviembre de 2026
+
+Los productos de refuerzo se reúnen en docs/02-modelado.md, docs/modelos y docs/05-operaciones.md. La matriz de los ocho entregables y sus evidencias está en docs/README.md. La guía añadida por el usuario el 21 de noviembre coincide por SHA-256 con la fuente académica organizada; no cambia los criterios.

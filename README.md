@@ -2,101 +2,117 @@
 
 # NexusKM
 
-**Gestión de conocimiento técnico y análisis de dependencias de software**
+**Conocimiento técnico conectado con sus responsables y dependencias**
 
-![Neo4j](https://img.shields.io/badge/Grafo-Neo4j-008CC1?style=flat-square&logo=neo4j&logoColor=white)
-![Estado](https://img.shields.io/badge/Estado-En_desarrollo-D97706?style=flat-square)
-![Proyecto](https://img.shields.io/badge/Proyecto-Ingenier%C3%ADa_de_datos-6D28D9?style=flat-square)
-![Entrega](https://img.shields.io/badge/Entrega-27_nov_2026-047857?style=flat-square)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?style=flat-square&logo=postgresql&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-7-23734a?style=flat-square&logo=mongodb&logoColor=white)
+![Neo4j](https://img.shields.io/badge/Neo4j-5.26-008CC1?style=flat-square&logo=neo4j&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-REST-009688?style=flat-square&logo=fastapi&logoColor=white)
+![Pruebas](https://img.shields.io/badge/pruebas-39%20aprobadas-23734a?style=flat-square)
+![Entrega](https://img.shields.io/badge/entrega-27%20nov%202026-1d5fbf?style=flat-square)
 
-[Contexto](contexto/README.md) · [Modelado y scripts](NexusKM/README.md) · [Revisión adversaria](contexto/revision_adversaria.md) · [Avance](contexto/seguimiento.md)
+[Inicio rápido](#inicio-rápido) · [Ocho entregables](docs/README.md) · [Informe y presentación](entrega/) · [Modelos](docs/02-modelado.md) · [Pruebas](docs/08-pruebas-y-manual.md)
 
 </div>
 
----
+NexusKM es una aplicación de gestión del conocimiento técnico. Conecta APIs, servicios, componentes, proyectos, documentos versionados y responsables. Permite investigar el impacto de un cambio y publicar documentación después de su revisión técnica y de seguridad.
 
-NexusKM reúne el contexto de proyectos, responsables, documentos versionados y dependencias técnicas de una empresa de software. Permite investigar el impacto de cambiar una API, encontrar el conocimiento relacionado y reconstruir las decisiones de aprobación.
+**Nexus** significa vínculo o conexión y **KM** corresponde a *Knowledge Management*, gestión del conocimiento. El caso académico utiliza datos ficticios de Checkout, inventario, pagos y antifraude.
 
-El caso académico utiliza datos ficticios de checkout, inventario, pagos y antifraude. La entrega integrada incorpora los modelos relacional, documental y de grafos con una API e interfaz común.
+![Aplicación real consultando Inventory API](docs/pruebas/evidencias/01-impacto.jpg)
 
-## El problema que aborda
+*Captura del servicio local ejecutado el 21 de noviembre de 2026. Inventory API conduce a checkout-service y CHECKOUT; la respuesta combina Neo4j, PostgreSQL y MongoDB.*
 
-Los contratos de API, runbooks y decisiones de arquitectura suelen quedar distribuidos entre herramientas. Cuando cambia un servicio, el equipo necesita identificar qué lo consume, a qué proyecto pertenece, quién es responsable y qué documentación requiere revisión.
+## Inicio rápido
 
-La consulta central del modelo conecta **Inventory API**, su dependencia, **checkout-service**, el componente **Adaptador de pagos**, el repositorio **checkout-api** y **Sistema Checkout**.
+Requiere Docker Desktop con motor Linux y Compose v2. No requiere Python en el host para ejecutar la aplicación.
 
-![Subgrafo de impacto de Inventory API](NexusKM/evidencias/05_subgrafo_impacto_inventory_api.png)
+```powershell
+git clone https://github.com/LuisNafate/NexusKM.git
+Set-Location NexusKM
+powershell -ExecutionPolicy Bypass -File scripts/start.ps1
+```
 
-*Visualización reconstruida a partir del resultado de Q3 reportado el 12 de noviembre de 2026. La ejecución actual del servidor está pendiente de comprobar.*
+Abre **[localhost:58000](http://localhost:58000)**. Inicia sesión con **PER-002** y la contraseña **DEMO_PASSWORD de tu archivo `.env` local**, generado al primer arranque. No compartas ese archivo. [Manual y configuración](docs/08-pruebas-y-manual.md) · [Swagger](http://localhost:58000/docs).
 
-## Estado de la solución
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/test.ps1
+powershell -ExecutionPolicy Bypass -File scripts/stop.ps1
+```
 
-| Componente | Estado | Evidencia o siguiente paso |
-| --- | --- | --- |
-| Modelo de grafos | Modelo y scripts disponibles | Diez scripts Cypher, siete diagramas y resultados históricos. |
-| Base relacional | Diseño inicial propuesto | Definir el catálogo, las solicitudes y las transacciones de aprobación. |
-| Base documental | Diseño inicial propuesto | Definir contenido anidado de runbooks, contratos y modelos de amenazas. |
-| Backend e interfaz | Desarrollo pendiente | Implementar operaciones y coordinación entre las tres bases. |
-| Revisión adversaria | Análisis estático disponible | Trece hallazgos y trece escenarios de validación. |
-| Pruebas integradas | Pendientes | Completar validación actual, fallos parciales y ejecución reproducible. |
+El apagado conserva los datos. El script de pruebas pausa la app y la reinicia al terminar; crea y limpia sus propios registros. No lo ejecutes mientras editas documentos. La reconstrucción con volúmenes nuevos y el reinicio sin resembrar están [verificados](docs/pruebas/evidencias/reconstruccion.json).
 
-El reporte histórico declara **63 nodos**, **87 relaciones**, **23 etiquetas**, **33 tipos de relación** y **24 restricciones**. Los resultados se conservan en la carpeta de evidencias.
+## Qué organiza y qué permite hacer
 
-## Arquitectura propuesta
+| Área | Capacidad funcional |
+| --- | --- |
+| Impacto | API → dependencia → servicio → componente → repositorio → proyecto, con documentos vigentes autorizados |
+| Documentos | Crear, consultar, renombrar, versionar, editar borrador y dar de baja con historial |
+| Aprobaciones | Dos técnicos distintos, propietario real y seguridad para contenido restringido |
+| Publicación | Verificar contenido sincronizado, retirar versión anterior y publicar en transacción |
+| Auditoría | Actor, fecha y entidad por comando; alcance según rol |
+| Consistencia | Outbox durable, revisiones, idempotencia y recuperación sin duplicados |
+
+## Tres modelos con responsabilidades claras
 
 ```mermaid
 flowchart TB
-    UI["Interfaz de usuario"] --> API["API y servicios de aplicación"]
-    API --> SQL["Relacional<br/>Catálogo y aprobaciones"]
-    API --> DOC["Documental<br/>Contenido versionado"]
-    API --> GRAPH["Neo4j<br/>Dependencias e impacto"]
-
-    classDef application fill:#f5f3ff,stroke:#7c3aed,color:#3b0764
-    classDef relational fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
-    classDef document fill:#ecfdf5,stroke:#059669,color:#064e3b
-    classDef graphDatabase fill:#ecfeff,stroke:#0891b2,color:#164e63
-
-    class UI,API application
+    UI[Interfaz web] --> API[FastAPI y servicios]
+    API --> SQL[(PostgreSQL)]
+    API --> DOC[(MongoDB)]
+    API --> GRAPH[(Neo4j)]
+    SQL --> OUT[Outbox y reintentos]
+    OUT --> DOC
+    OUT --> GRAPH
+    classDef relational fill:#eff6ff,stroke:#336791,color:#173451
+    classDef document fill:#edf7ef,stroke:#23734a,color:#16482f
+    classDef graph fill:#ecfeff,stroke:#008cc1,color:#164e63
     class SQL relational
     class DOC document
-    class GRAPH graphDatabase
+    class GRAPH graph
 ```
 
-La matriz de propiedad de datos, los identificadores compartidos y el tratamiento inicial de fallos parciales se describen en la [propuesta de arquitectura](contexto/arquitectura_propuesta.md).
+PostgreSQL gobierna catálogos, versiones y aprobaciones; MongoDB conserva contenido anidado por versión; Neo4j conserva dependencias técnicas y proyecciones documentales. El servicio reutiliza IDs y coordina cambios con consistencia eventual explícita. [Comparación tecnológica y fuentes de verdad](docs/03-arquitectura.md).
 
-## Recursos del proyecto
+## Entrega académica
 
-| Recurso | Contenido |
-| --- | --- |
-| [Propuesta de aplicación](contexto/tema.md) | Problema, usuarios, operaciones y alcance inicial. |
-| [Requisitos académicos](contexto/requisitos.md) | Ocho entregables del proyecto y actividad de modelado de grafos. |
-| [Scripts Cypher](NexusKM/cypher) | Esquema, carga ficticia, relaciones, consultas y pruebas. |
-| [Diagramas Mermaid](NexusKM/diagramas/README.md) | Modelo lógico, aprobación, excepciones, seguridad y trazabilidad. |
-| [Documento académico](NexusKM/documentacion/NexusKM_documento_academico_actualizado.pdf) | Análisis, diccionario, relaciones, reglas y evidencia histórica. |
-| [Documento editable](NexusKM/documentacion/NexusKM_documento_academico_actualizado.docx) | Versión de trabajo en Word. |
-| [Presentación de clase](NexusKM/presentacion/NexusKM_presentacion_clase_final_actualizada.pptx) | Diecinueve diapositivas sobre el dominio, modelo y ejecución previa. |
-| [Evidencias](NexusKM/evidencias/README.md) | Resumen de ejecución, resultados y reconstrucciones del grafo. |
-| [Revisión adversaria](contexto/revision_adversaria.md) | Contradicciones, riesgos y casos por probar. |
-| [Seguimiento](contexto/seguimiento.md) | Avance por entregable, fechas y decisiones pendientes. |
+| Entregable | Estado verificable | Recurso |
+| --- | --- | --- |
+| 1 Propuesta | Problema, usuarios, alcance y 12 RFI | [Propuesta](docs/01-propuesta.md) |
+| 2 Modelado | Conceptual, SQL, documental, 23 etiquetas y 33 relaciones | [Modelos y diccionarios](docs/02-modelado.md) |
+| 3 Arquitectura | Stack, comparación, autoridad por dato y recuperación | [Arquitectura](docs/03-arquitectura.md) |
+| 4 Bases | Tres motores, scripts y carga reproducible | [Implementación](docs/04-implementacion.md) |
+| 5 Consultas | 5 SQL, 4 documentales, 9 Cypher y operaciones integradas | [Catálogo](docs/05-operaciones.md) |
+| 6 Backend | API, servicios, drivers, autorización y OpenAPI | [API](docs/06-api.md) |
+| 7 Aplicación | Interfaz funcional y capturas reales desktop/tablet/móvil | [Aplicación](docs/07-aplicacion.md) |
+| 8 Verificación | 39 pruebas aprobadas, reconstrucción y manual | [Pruebas y ejecución](docs/08-pruebas-y-manual.md) |
 
-## Ejecución del grafo
+**[Informe PDF](entrega/NexusKM_informe_integrado.pdf)** · **[Informe editable](entrega/NexusKM_informe_integrado.docx)** · **[Presentación](entrega/NexusKM_presentacion_integrada.pptx)** · **[Guion de demostración](docs/demo.md)** · **[Paquete completo](entrega/NexusKM_entrega.zip)**
 
-Los scripts usan el conjunto ficticio de NexusKM. La [guía de ejecución](NexusKM/README.md) describe el entorno y las limitaciones técnicas.
+## Evidencia y límites
 
-1. Comprobar la instancia y la base seleccionada con `00_preflight.cypher`.
-2. Aplicar el esquema y cargar los datos siguiendo el orden de `01` a `07`.
-3. Ejecutar las consultas de `08_queries.cypher`.
-4. Revisar las comprobaciones de `09_tests.cypher` y registrar resultados y fecha.
+La [verificación actual](docs/pruebas/evidencias/verificacion-integrada.json) registra versiones, consultas completas, integridad y tiempos. [JUnit](docs/pruebas/evidencias/pytest.xml): 39 pruebas sin fallos ni omisiones. La carga nueva tiene 63 nodos y 87 relaciones; tras el ensayo UI conserva 65 nodos y 90 relaciones, incluidos un borrador dado de baja y la publicación de SOL-001. [Resultados y método de medición](docs/pruebas/resultados.md).
 
-La revisión adversaria identifica correcciones pendientes en la aprobación del propietario, el filtro de vigencia de Q2 y la validación de propiedades y cardinalidades. Consulta sus hallazgos antes de preparar una nueva demostración.
+La aplicación es una demostración académica local. Los conectores Confluence/GitHub, excepciones con calendario laboral, delegación y escalamiento del grafo previo son extensiones modeladas, sin automatización productiva. SSO, alta disponibilidad, administración completa de usuarios y despliegue público del servicio quedan fuera del alcance. Los catálogos técnicos se mantienen mediante scripts.
 
-## Trazabilidad y referencias
+## Organización
 
-El 18 de noviembre de 2026 se incorporaron los **33 archivos** del trabajo previo y su ZIP. La carpeta de origen, el archivo comprimido y las copias migradas se contrastaron mediante SHA-256. El [inventario de migración](contexto/migracion.json) conserva tamaños y hashes. El [ZIP original](contexto/fuentes/antecedentes/NexusKM_paquete_final_ejecutado.zip) permite recuperar ese punto de partida.
+```text
+backend/       API, dominio, autorización y repositorios
+frontend/      interfaz web y licencia de tipografía
+database/      esquemas, contenido y consultas
+NexusKM/       scripts del grafo y antecedentes conservados
+scripts/       arranque, carga, pruebas y evidencia
+tests/         pruebas contra los tres motores reales
+docs/          ocho entregables, modelos, manual y capturas
+entrega/       informe, presentación y paquete compartible
+contexto/      requisitos, decisiones, revisión y procedencia
+```
 
-- [Guía del proyecto final](contexto/fuentes/Guia_Proyecto_Final_Bases_Datos.pdf).
-- [Material de clase sobre modelado de grafos](contexto/fuentes/Modelado%20de%20grafos%20para%20BD.pptx).
-- [Anuncio de la actividad](contexto/fuentes/anuncio-classroom.png).
-- [Fuentes técnicas del trabajo previo](NexusKM/FUENTES.md).
+## Referencias y trazabilidad
 
-**Universidad Politécnica de Chiapas** · Ingeniería de datos · Entrega anunciada para el **27 de noviembre de 2026**.
+[Guía oficial](contexto/fuentes/Guia_Proyecto_Final_Bases_Datos.pdf) · [Modelado de grafos](contexto/fuentes/Modelado%20de%20grafos%20para%20BD.pptx) · [Referencias técnicas](docs/referencias.md) · [Revisión adversaria](contexto/revision_adversaria.md) · [Seguimiento](contexto/seguimiento.md).
+
+El inventario [migracion.json](contexto/migracion.json) registra los 33 archivos de origen y sus hashes; el [ZIP original](contexto/fuentes/antecedentes/NexusKM_paquete_final_ejecutado.zip) permite recuperar esa versión. Las correcciones posteriores están en Git. Los documentos y capturas de `NexusKM/` son antecedentes del 12 de noviembre; la entrega integrada vigente está en `docs/` y `entrega/`.
+
+**Universidad Politécnica de Chiapas · Ingeniería de datos · Profesor Horacio Irán Solís Cisneros · Entrega anunciada 27 de noviembre de 2026.**

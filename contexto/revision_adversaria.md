@@ -1,4 +1,34 @@
-# Revisión adversaria de NexusKM
+# Revisión adversaria y cierre de hallazgos
+
+**Corte actual:** 21 de noviembre de 2026. La tabla original se conserva debajo como antecedente. La verificación actual combina código, tres motores reales, 39 pruebas, reconstrucción e interfaz.
+
+| Hallazgo | Resolución o límite actual | Evidencia |
+| --- | --- | --- |
+| A01 Propietario incorrecto | APR-004 corresponde a Carlos PER-002; servicio exige propietario real | T12, pruebas de falso propietario y publicación |
+| A02 Q2 incluía borradores | Filtros PUBLICADO, activo, VIGENTE y vencimiento futuro | Q2 actual y prueba positiva |
+| A03 Rol con dos propiedades | Se añadió descripcion; diccionario completo actualizado | Script 02 y docs/modelos/diccionario-grafo.md |
+| A04 DESDE solo Microservicio | Admite unión Microservicio o Documento, exactamente un origen | Diagrama, catálogo y T7 |
+| A05 Aprobaciones débiles | FK, unicidad, roles, emisor y solicitud; dos técnicos distintos | Servicio, T11–T13 y pruebas de autorización |
+| A06 Unicidad insuficiente | SQL y Mongo imponen estructura; servicio controla dominio y Neo4j valida proyección | Pruebas de motor y 18 reglas documentadas |
+| A07 Fechas y plazos | T8 cubre positivos, ALTA y CRITICA; Q5 prioriza cierre y falta de fecha | Consulta actual; calendario laboral sigue fuera del alcance |
+| A08 Seed puede sobrescribir | Bootstrap ejecuta seed solo una vez; DEPENDE_DE usa identidad estable | Marcador SQL, reconstrucción y reinicio sin cambios |
+| A09 Actor ambiguo legado | Auditoría actual SQL usa actor humano explícito o NULL para sistema | Prueba de alcance y captura 07; Q6 legado no se usa como auditoría actual |
+| A10 Base vacía aparenta éxito | Conteos mínimos, IDs y consultas positivas acompañan cero violaciones | Test graph_tests_and_positive_coverage y reconstrucción |
+| A11 Faltaban dos bases y app | Tres motores, API e interfaz implementados | Salud, integración y capturas reales |
+| A12 Aprobación confundida con publicación | Transiciones explícitas y publicación real | Prueba de flujo y captura PUBLICADA |
+| A13 Evidencia histórica incompleta | Se conserva historia y se generan salidas actuales completas | verificacion-integrada.json, pytest.xml y capturas |
+
+## Riesgos que siguen delimitados
+
+No hay transacción distribuida; las proyecciones convergen por outbox y una consulta puede devolver 503 durante una indisponibilidad. El ensayo de fallo parcial es controlado, no una simulación completa de todas las fallas de red. Neo4j Community no impone cardinalidades generales. Los administradores de las bases pueden saltarse reglas de la API, por lo que las credenciales no forman parte del acceso de usuario.
+
+El servicio es académico local: SSO, conectores externos, calendario hábil, delegaciones efectivas, notificaciones y operación productiva no están implementados. La evidencia actual no afirma esos alcances. Los catálogos técnicos y organizacionales se mantienen por scripts.
+
+La entrega revisada se describe en [docs](../docs/README.md), con [matriz de pruebas](../docs/pruebas/matriz.md) y [manual](../docs/08-pruebas-y-manual.md).
+
+---
+
+# Revisión adversaria original del 18 de noviembre
 
 **Fecha** 18 de noviembre de 2026.  
 **Método** Contraste estático entre requisitos, scripts, diccionario, diagramas, presentación y evidencia recibida. Los contraejemplos de esta revisión describen escenarios por ejecutar en un entorno de prueba.

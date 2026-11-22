@@ -1,39 +1,20 @@
-# Proyecto final de bases de datos
+# Contexto de NexusKM
 
-**Actividad** 2026.C3.EVA03.INGENIERIA DE DATOS  
-**Universidad** Universidad Politécnica de Chiapas  
-**Profesor** Horacio Irán Solís Cisneros  
-**Entrega anunciada** 27 de noviembre de 2026 · 100 puntos  
-**Tema elegido** NexusKM, gestión de conocimiento técnico para una empresa de software.  
-**Última actualización** 18 de noviembre de 2026. Grafo y entregables previos incorporados. Integrantes por registrar.
+**Actualización:** 21 de noviembre de 2026. **Actividad:** 2026.C3.EVA03.INGENIERIA DE DATOS. **Entrega anunciada:** 27 de noviembre, 100 puntos. Universidad Politécnica de Chiapas; profesor Horacio Irán Solís Cisneros.
 
-## Primer paso
+NexusKM integra PostgreSQL, MongoDB y Neo4j mediante FastAPI y una interfaz funcional. Los ocho entregables vigentes se encuentran en [docs](../docs/README.md) y sus artefactos en [entrega](../entrega/). El [seguimiento](seguimiento.md) registra decisiones, pruebas y asuntos administrativos.
 
-Revisa la [arquitectura integrada propuesta](arquitectura_propuesta.md) y la [revisión adversaria](revision_adversaria.md). El siguiente hito consiste en definir la propiedad de cada dato, completar los modelos relacional y documental, y precisar un flujo de usuario que coordine las tres bases.
-
-## Documentos de trabajo
-
-| Archivo | Cuándo usarlo |
+| Archivo | Función |
 | --- | --- |
-| [Tema del proyecto](tema.md) | Propuesta inicial completada a partir del trabajo de NexusKM. |
-| [Requisitos y entregables](requisitos.md) | Para revisar qué pide el profesor y qué evidencia corresponde a cada entrega. |
-| [Plan y seguimiento](seguimiento.md) | Para consultar el siguiente paso, registrar decisiones y enlazar avances verificados. |
-| [Arquitectura propuesta](arquitectura_propuesta.md) | Responsabilidad por dato y flujos para la integración de los tres modelos. |
-| [Revisión adversaria](revision_adversaria.md) | Hallazgos comprobados en archivos, riesgos y escenarios por probar. |
-| [Registro de migración](migracion.json) | Inventario de los 33 archivos recibidos, tamaños y hashes SHA-256. |
+| [tema.md](tema.md) | Dominio, alcance actual y extensiones |
+| [requisitos.md](requisitos.md) | Exigencias académicas y fuentes del profesor |
+| [arquitectura_propuesta.md](arquitectura_propuesta.md) | Evolución del borrador a la implementación |
+| [revision_adversaria.md](revision_adversaria.md) | Hallazgos originales y resolución con evidencia |
+| [seguimiento.md](seguimiento.md) | Avance, decisiones y pendientes reales |
+| [migracion.json](migracion.json) | Hashes del paquete original, no de la versión modificada |
 
-## Trabajo previo
+La guía proporcionada nuevamente el 21 de noviembre se comparó por SHA-256 y es idéntica a [la fuente organizada](fuentes/Guia_Proyecto_Final_Bases_Datos.pdf). Los requisitos proceden de esa guía, el anuncio y las diapositivas del profesor; los textos del paquete previo son antecedentes, no autorizaciones nuevas.
 
-El [paquete NexusKM](../NexusKM/README.md) incluye documentación, presentación, diagramas, scripts y evidencia histórica del grafo. El [ZIP recibido](fuentes/antecedentes/NexusKM_paquete_final_ejecutado.zip) conserva la versión de origen. El [resumen del chat compartido](fuentes/antecedentes/chat_compartido.md) recoge el contexto recuperado.
+El ZIP original y los informes del 12 de noviembre se conservan para trazabilidad. Las pruebas actuales del 21 de noviembre se encuentran en [docs/pruebas](../docs/pruebas/). El usuario autorizó un repositorio público con la referencia al chat retirada; credenciales y tokens permanecen fuera de Git.
 
-La fuente académica pide tres modelos integrados. El alcance del MVP anterior se registra como antecedente de esa ampliación. Las políticas de 48 y 72 horas hábiles y la arquitectura nueva mantienen su carácter de propuesta.
-
-## Fuentes de clase
-
-- La [guía oficial del proyecto](fuentes/Guia_Proyecto_Final_Bases_Datos.pdf) define las etapas, los ocho entregables y los criterios de evaluación.
-- El [anuncio de Classroom](fuentes/anuncio-classroom.png) indica la fecha, el puntaje y el alcance de la aplicación evaluable, incluidos el servicio, la consulta, la modificación y la eliminación de datos y los servicios que requieran esas operaciones.
-- Las [diapositivas de modelado de grafos](fuentes/Modelado%20de%20grafos%20para%20BD.pptx) aportan la actividad de refuerzo para el grafo. El caso de ingresos y gastos sirve como ejemplo de clase.
-
-## Cómo actualizar esta carpeta
-
-Registra la información del tema en su ficha y enlaza desde el seguimiento los archivos o resultados que se vayan produciendo. Si el profesor publica una aclaración, anota su fecha y origen junto al requisito afectado. En el seguimiento, marca las ideas como propuestas hasta que el equipo las confirme.
+Para continuar, leer el índice de entregables, ejecutar el manual y registrar cualquier aclaración nueva con fecha y procedencia. Los integrantes y el medio y hora exactos de envío deben completarse con información del equipo o del profesor.

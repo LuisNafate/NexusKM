@@ -1,3 +1,5 @@
+> **Antecedente del grafo.** La entrega integrada vigente está en [docs](../docs/README.md) y [entrega](../entrega/). Este README, los documentos y la presentación de esta carpeta describen el MVP previo del grafo. Los scripts Cypher sí incluyen correcciones posteriores registradas en Git. Para iniciar el sistema actual utiliza scripts/start.ps1 desde la raíz; no reejecutes manualmente los seeds sobre una base con cambios.
+
 # NexusKM
 
 Proyecto académico de gestión de conocimiento técnico para una empresa de software, modelado como grafo en Neo4j.

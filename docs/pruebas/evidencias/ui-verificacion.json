@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-21",
+  "environment": "Navegador integrado, datos ficticios, interfaz HTTP local",
+  "passed": [
+    "Acceso autenticado",
+    "Consulta de impacto integrada",
+    "Creación de borrador",
+    "Edición de contenido",
+    "Modificación de título",
+    "Baja lógica con historial",
+    "Publicación de SOL-001",
+    "Auditoría de acciones",
+    "Vista de escritorio 1440px",
+    "Vista de tableta 768px",
+    "Vista móvil 390px",
+    "Navegación móvil"
+  ],
+  "fixes": [
+    "Confirmación de baja dentro de la aplicación",
+    "Protección de vistas frente a respuestas tardías de otra pantalla"
+  ]
+}
