@@ -12,3 +12,8 @@ node_modules/
 .DS_Store
 Thumbs.db
 ~$*
+.runtime/
+.pytest_cache/
+test-results/
+.taste-skill/
+output/qa/

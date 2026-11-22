@@ -1,0 +1,73 @@
+{
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": ["_id", "documentId", "kind", "revision", "content"],
+    "properties": {
+      "_id": {"bsonType": "string", "minLength": 3},
+      "documentId": {"bsonType": "string", "minLength": 3},
+      "kind": {"enum": ["RUNBOOK", "API", "SEGURIDAD"]},
+      "revision": {"bsonType": ["int", "long"], "minimum": 1},
+      "content": {
+        "bsonType": "object",
+        "required": ["summary", "sections"],
+        "properties": {
+          "summary": {"bsonType": "string", "minLength": 10, "maxLength": 2000},
+          "sections": {
+            "bsonType": "array", "minItems": 1, "maxItems": 30,
+            "items": {
+              "bsonType": "object", "required": ["heading", "body"],
+              "properties": {
+                "heading": {"bsonType": "string", "minLength": 2},
+                "body": {"bsonType": "string", "minLength": 3}
+              }
+            }
+          }
+        }
+      }
+    },
+    "oneOf": [
+      {
+        "properties": {
+          "kind": {"enum": ["RUNBOOK"]},
+          "content": {
+            "required": ["steps"],
+            "properties": {
+              "steps": {"bsonType": "array", "minItems": 1, "items": {
+                "bsonType": "object", "required": ["title", "instruction"],
+                "properties": {"title": {"bsonType": "string", "minLength": 1}, "instruction": {"bsonType": "string", "minLength": 1}}
+              }}
+            }
+          }
+        }
+      },
+      {
+        "properties": {
+          "kind": {"enum": ["API"]},
+          "content": {
+            "required": ["endpoints"],
+            "properties": {
+              "endpoints": {"bsonType": "array", "minItems": 1, "items": {
+                "bsonType": "object", "required": ["path", "method"],
+                "properties": {"path": {"bsonType": "string", "minLength": 1}, "method": {"bsonType": "string", "minLength": 1}}
+              }}
+            }
+          }
+        }
+      },
+      {
+        "properties": {
+          "kind": {"enum": ["SEGURIDAD"]},
+          "content": {
+            "required": ["threats"],
+            "properties": {
+              "threats": {"bsonType": "array", "minItems": 1, "items": {
+                "bsonType": "object", "required": ["title", "mitigation"],
+                "properties": {"title": {"bsonType": "string", "minLength": 1}, "mitigation": {"bsonType": "string", "minLength": 1}}
+              }}
+            }
+          }
+        }
+      }
+    ]
+  }
+}

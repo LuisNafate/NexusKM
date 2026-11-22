@@ -1,0 +1,45 @@
+[
+  {
+    "_id": "VER-001", "documentId": "DOC-001", "kind": "RUNBOOK", "revision": 1,
+    "content": {
+      "summary": "Procedimiento de diagnóstico y recuperación del servicio de pagos de Checkout.",
+      "sections": [
+        {"heading": "Alcance", "body": "Aplica a checkout-service y al Adaptador de pagos del proyecto CHECKOUT."},
+        {"heading": "Verificación", "body": "Consultar Inventory API antes de confirmar el pago y conservar el identificador de la operación."}
+      ],
+      "steps": [
+        {"title": "Identificar el incidente", "instruction": "Recuperar el identificador de la compra y comprobar el estado del servicio."},
+        {"title": "Validar disponibilidad", "instruction": "Consultar el contrato vigente de inventario y verificar la reserva."},
+        {"title": "Recuperar", "instruction": "Reintentar con el mismo identificador para evitar una confirmación duplicada."}
+      ]
+    }
+  },
+  {
+    "_id": "VER-002", "documentId": "DOC-002", "kind": "API", "revision": 1,
+    "content": {
+      "summary": "Contrato de Inventory API para consultar existencias y registrar reservas de inventario.",
+      "sections": [
+        {"heading": "Consumidor", "body": "checkout-service consume este contrato mediante una dependencia de criticidad CRITICA."},
+        {"heading": "Compatibilidad", "body": "Conservar los identificadores de producto y la semántica de confirmación al actualizar la API."}
+      ],
+      "endpoints": [
+        {"path": "/inventory/{productId}", "method": "GET", "response": "productId, availableUnits"},
+        {"path": "/reservations", "method": "POST", "request": "productId, quantity, operationId"}
+      ]
+    }
+  },
+  {
+    "_id": "VER-003", "documentId": "DOC-003", "kind": "SEGURIDAD", "revision": 1,
+    "content": {
+      "summary": "Análisis de amenazas del flujo de Checkout y sus servicios de inventario, pagos y antifraude.",
+      "sections": [
+        {"heading": "Activos", "body": "La operación protege la integridad de la compra, la reserva y la decisión de pago."},
+        {"heading": "Revisión", "body": "El contenido restringido requiere revisión de seguridad y del propietario antes de publicar."}
+      ],
+      "threats": [
+        {"title": "Repetición de confirmación", "mitigation": "Identificar la operación y rechazar efectos duplicados."},
+        {"title": "Consulta sin autorización", "mitigation": "Validar identidad y rol antes de recuperar contenido restringido."}
+      ]
+    }
+  }
+]
