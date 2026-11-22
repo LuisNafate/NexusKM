@@ -66,10 +66,10 @@ flowchart TB
     OUT --> GRAPH
     classDef relational fill:#eff6ff,stroke:#336791,color:#173451
     classDef document fill:#edf7ef,stroke:#23734a,color:#16482f
-    classDef graph fill:#ecfeff,stroke:#008cc1,color:#164e63
+    classDef graphDatabase fill:#ecfeff,stroke:#008cc1,color:#164e63
     class SQL relational
     class DOC document
-    class GRAPH graph
+    class GRAPH graphDatabase
 ```
 
 PostgreSQL gobierna catálogos, versiones y aprobaciones; MongoDB conserva contenido anidado por versión; Neo4j conserva dependencias técnicas y proyecciones documentales. El servicio reutiliza IDs y coordina cambios con consistencia eventual explícita. [Comparación tecnológica y fuentes de verdad](docs/03-arquitectura.md).
